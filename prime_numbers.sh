@@ -24,6 +24,7 @@ while [ $i -le $nkey ]; do
 	while [ $j -lt $i ]; do
 		if [ `expr $i % $j` -eq 0 ] ; then
 			flag=1
+			echo "$i is not prime. Divides by $j"
 		fi
 	let j=$j+1
 	done
@@ -51,8 +52,6 @@ while [ 1 ] ; do
 		dkey=1	
 	elif [[ "$1" == "-v" ]] ; then
 		vkey=1
-	elif [[ "$1" == "-m" ]] ; then
-		mkey=1 
 	elif [ -z "$1" ] ; then
 		break
 	else
@@ -62,7 +61,7 @@ while [ 1 ] ; do
 	shift
 done
 
-if [[ $hkey -eq 1 ||y -z "nkey" ]] ; then
+if [[ $hkey -eq 1 || -z "nkey" ]] ; then
 	usage
 elif [ -z "$nkey" ] ; then
 	echo "Error! You don't pass required parameter." 1>&2
