@@ -1,5 +1,5 @@
 #! /bin/bash
-start='date +"%H:%M:%S"'
+start="$(date +'%H:%M:%S')"
 fkey=0 #ключ на сохранение файла
 hkey=0 #справка
 vkey=0 #verbose mode
@@ -45,9 +45,10 @@ while [ $i -le $nkey ]; do
 	let i=$i+1
 done
 if [ $mkey -eq 1 ] ; then 
+	sm="$(cat $fn)"
 	echo "Script started at $start, 
-	entered number: $nkey, result" | mail -s "Result of prime
-	number script" $m
+	entered number: $nkey, result of prime
+number script: $sm" #| mail -s "Result" $m
 fi
 }
 
@@ -63,7 +64,7 @@ while [ 1 ] ; do
 	elif [[ "$1" == "-v" ]] ; then
 		vkey=1
 	elif [[ "$1" == "-m" ]] ; then
-		shift ; mail="$1" ; mkey=1 
+		shift ; m="$1" ; mkey=1 
 	elif [ -z "$1" ] ; then
 		break
 	else
