@@ -83,25 +83,27 @@ while [ 1 ] ; do
 	shift
 done
 
-touch $fn 2>/dev/null
-if [[ $? == 0 ]] ; then 
-if [[ "$nkey" =~ [0-9] && "$nkey" -ge 2 ]] ; then
+
 if [[ $hkey -eq 1 || -z "nkey" ]] ; then
  	usage
 elif [ -z "$nkey" ] ; then
 	echo "Error! You don't pass required parameter." 1>&2
 	exit 1
 else
+touch $fn 2>/dev/null
+if [[ $? == 0 ]] ; then 
+if [[ "$nkey" =~ [0-9] && "$nkey" -ge 2 ]] ; then
 	if [[ $dkey -eq 1 ]] ; then
 		set -x
 		main
 	else 
 		main
 	fi
-fi
 else	
 	echo "Write number. Number must greater than or equal to 2."
 fi
 else
 	echo "The file was not created. Restart the script with the correct path."
 fi
+fi
+
