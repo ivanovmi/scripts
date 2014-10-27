@@ -20,7 +20,12 @@ function usage {
 
 function main {
 flag=0
-i=2
+i=1
+if [[ $fkey -eq 1 ]] ; then
+	if [ -f $fn ] ; then
+		rm -f $fn
+	fi
+fi
 while [ $i -le $nkey ]; do
 	j=2
 	flag=0
@@ -28,7 +33,11 @@ while [ $i -le $nkey ]; do
 		if [ `expr $i % $j` -eq 0 ] ; then
 			flag=1
 			if [ $vkey -eq 1 ] ; then
-				echo "$i is not prime. Divides by $j"
+				if [[ $fkey -eq 1 ]] ; then
+					echo "$i is not prime. Divides by $j" >> $fn
+				else 
+					echo "$i is not prime. Divides by $j"
+				fi	
 			fi
 		fi
 	let j=$j+1
@@ -74,6 +83,8 @@ while [ 1 ] ; do
 	shift
 done
 
+touch $fn 2>/dev/null
+if [[ $? == 0 ]] ; then
 if [[ $hkey -eq 1 || -z "nkey" ]] ; then
 	usage
 elif [ -z "$nkey" ] ; then
@@ -86,4 +97,7 @@ else
 	else 
 		main
 	fi
+fi
+else
+	echo "The file was not created. Restart the script with the correct path."
 fi
