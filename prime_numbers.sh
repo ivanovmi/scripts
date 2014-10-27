@@ -101,7 +101,7 @@ else
 	fi
 fi
 else
-	echo "Number must greater or equal 2."
+	echo "Number must greater than or equal to 2."
 fi
 else 
 	echo "Not correct number. Please, try again."
