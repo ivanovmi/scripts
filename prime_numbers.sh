@@ -85,7 +85,7 @@ done
 
 touch $fn 2>/dev/null
 if [[ $? == 0 ]] ; then 
-if [[ "$nkey" =~ [0-9] || "$nkey" -ge 2 ]] ; then
+if [[ "$nkey" =~ [0-9] && "$nkey" -ge 2 ]] ; then
 if [[ $hkey -eq 1 || -z "nkey" ]] ; then
  	usage
 elif [ -z "$nkey" ] ; then
