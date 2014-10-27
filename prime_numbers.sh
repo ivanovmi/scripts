@@ -20,7 +20,7 @@ function usage {
 
 function main {
 flag=0
-i=1
+i=2
 if [[ $fkey -eq 1 ]] ; then
 	if [ -f $fn ] ; then
 		rm -f $fn
