@@ -1,0 +1,245 @@
+2013-07-30 18:12:29.767 | Started by user Jeremy Stanley
+2013-07-30 18:12:29.768 | [EnvInject] - Loading node environment variables.
+2013-07-30 18:12:29.831 | Building remotely on precisepy3k-3 in workspace /home/jenkins/workspace/fungi-node-tester
+2013-07-30 18:12:29.858 | Checkout:fungi-node-tester / /home/jenkins/workspace/fungi-node-tester - hudson.remoting.Channel@6a0b43eb:precisepy3k-3
+2013-07-30 18:12:29.858 | Using strategy: Default
+2013-07-30 18:12:29.949 | Cloning the remote Git repository
+2013-07-30 18:12:29.949 | Cloning repository https://review.openstack.org/p/openstack-dev/hacking.git
+2013-07-30 18:12:29.955 | git --version
+2013-07-30 18:12:29.956 | git version 1.7.9.5
+2013-07-30 18:12:30.610 | Fetching upstream changes from https://review.openstack.org/p/openstack-dev/hacking.git
+2013-07-30 18:12:30.884 | Commencing build of Revision 38927b7c8fc1c9cc715b27b32ed17fa80b84438b (origin/master)
+2013-07-30 18:12:30.900 | Checking out Revision 38927b7c8fc1c9cc715b27b32ed17fa80b84438b (origin/master)
+2013-07-30 18:12:30.936 | No change to record in branch origin/master
+2013-07-30 18:12:30.979 | [fungi-node-tester] $ /bin/bash -xe /tmp/hudson5764572059168936755.sh
+2013-07-30 18:12:30.986 | + /usr/local/jenkins/slave_scripts/run-tox.sh 33 openstack-dev hacking
+2013-07-30 18:12:30.990 | + version=33
+2013-07-30 18:12:30.990 | + org=openstack-dev
+2013-07-30 18:12:30.990 | + project=hacking
+2013-07-30 18:12:30.991 | + [[ -z 33 ]]
+2013-07-30 18:12:30.991 | + [[ -z openstack-dev ]]
+2013-07-30 18:12:30.991 | + [[ -z hacking ]]
+2013-07-30 18:12:30.991 | + venv=py33
+2013-07-30 18:12:30.991 | + export NOSE_WITH_XUNIT=1
+2013-07-30 18:12:30.991 | + NOSE_WITH_XUNIT=1
+2013-07-30 18:12:30.992 | + export NOSE_WITH_HTML_OUTPUT=1
+2013-07-30 18:12:30.992 | + NOSE_WITH_HTML_OUTPUT=1
+2013-07-30 18:12:30.992 | + export NOSE_HTML_OUT_FILE=nose_results.html
+2013-07-30 18:12:30.992 | + NOSE_HTML_OUT_FILE=nose_results.html
+2013-07-30 18:12:30.992 | ++ /bin/mktemp -d
+2013-07-30 18:12:30.998 | + export TMPDIR=/tmp/tmp.KqhppK1x2J
+2013-07-30 18:12:30.999 | + TMPDIR=/tmp/tmp.KqhppK1x2J
+2013-07-30 18:12:30.999 | + trap 'rm -rf /tmp/tmp.KqhppK1x2J' EXIT
+2013-07-30 18:12:31.000 | + /usr/local/jenkins/slave_scripts/jenkins-oom-grep.sh pre
+2013-07-30 18:12:31.016 | + sudo /usr/local/jenkins/slave_scripts/jenkins-sudo-grep.sh pre
+2013-07-30 18:12:31.176 | + /usr/local/jenkins/slave_scripts/select-mirror.sh openstack-dev hacking
+2013-07-30 18:12:31.181 | + org=openstack-dev
+2013-07-30 18:12:31.181 | + project=hacking
+2013-07-30 18:12:31.181 | + [[ -z openstack-dev ]]
+2013-07-30 18:12:31.181 | + [[ -z hacking ]]
+2013-07-30 18:12:31.182 | + rm -f /home/jenkins/.pydistutils.cfg
+2013-07-30 18:12:31.184 | + mkdir -p /home/jenkins/.pip
+2013-07-30 18:12:31.188 | + rm -f /home/jenkins/.pip/pip.conf
+2013-07-30 18:12:31.191 | + '[' openstack-dev == openstack ']'
+2013-07-30 18:12:31.191 | + '[' openstack-dev == openstack ']'
+2013-07-30 18:12:31.192 | + cat
+2013-07-30 18:12:31.196 | + python setup.py --version
+2013-07-30 18:12:31.775 | 
+2013-07-30 18:12:31.775 | Installed /home/jenkins/workspace/fungi-node-tester/pbr-0.5.20-py2.7.egg
+2013-07-30 18:12:31.782 | Searching for d2to1>=0.2.10,<0.3
+2013-07-30 18:12:31.782 | Reading http://pypi.python.org/simple/d2to1/
+2013-07-30 18:12:31.827 | Best match: d2to1 0.2.10
+2013-07-30 18:12:31.827 | Downloading https://pypi.python.org/packages/source/d/d2to1/d2to1-0.2.10.tar.gz#md5=be97f5330bae3206e1555b58dae23848
+2013-07-30 18:12:31.898 | Processing d2to1-0.2.10.tar.gz
+2013-07-30 18:12:31.916 | Running d2to1-0.2.10/setup.py -q bdist_egg --dist-dir /tmp/tmp.KqhppK1x2J/easy_install-HHGUxz/d2to1-0.2.10/egg-dist-tmp-cfIaUf
+2013-07-30 18:12:32.021 | 
+2013-07-30 18:12:32.021 | Installed /home/jenkins/workspace/fungi-node-tester/d2to1-0.2.10-py2.7.egg
+2013-07-30 18:12:32.025 | Searching for setuptools-git>=0.4
+2013-07-30 18:12:32.025 | Reading http://pypi.python.org/simple/setuptools_git/
+2013-07-30 18:12:32.108 | Best match: setuptools-git 1.0
+2013-07-30 18:12:32.109 | Downloading https://pypi.python.org/packages/source/s/setuptools-git/setuptools-git-1.0.tar.gz#md5=de63b541a10c2b83caa478c687458b16
+2013-07-30 18:12:32.132 | Processing setuptools-git-1.0.tar.gz
+2013-07-30 18:12:32.140 | Running setuptools-git-1.0/setup.py -q bdist_egg --dist-dir /tmp/tmp.KqhppK1x2J/easy_install-sTIvzN/setuptools-git-1.0/egg-dist-tmp-eg0P0c
+2013-07-30 18:12:32.183 | 
+2013-07-30 18:12:32.183 | Installed /home/jenkins/workspace/fungi-node-tester/setuptools_git-1.0-py2.7.egg
+2013-07-30 18:12:32.282 | jenkins.fungi.node.tester.42
+2013-07-30 18:12:32.288 | + tox -epy33
+2013-07-30 18:12:32.398 | GLOB sdist-make: /home/jenkins/workspace/fungi-node-tester/setup.py
+2013-07-30 18:12:34.083 | py33 create: /home/jenkins/workspace/fungi-node-tester/.tox/py33
+2013-07-30 18:12:36.446 | py33 installdeps: -r/home/jenkins/workspace/fungi-node-tester/requirements.txt, -r/home/jenkins/workspace/fungi-node-tester/test-requirements.txt
+2013-07-30 18:16:26.613 | py33 inst: /home/jenkins/workspace/fungi-node-tester/.tox/dist/hacking-jenkins.fungi.node.tester.42.zip
+2013-07-30 18:16:28.758 | py33 runtests: commands[0] | python setup.py testr --slowest --testr-args=
+2013-07-30 18:16:29.519 | running testr
+2013-07-30 18:16:30.233 | running=OS_STDOUT_CAPTURE=${OS_STDOUT_CAPTURE:-1} \
+2013-07-30 18:16:30.233 | OS_STDERR_CAPTURE=${OS_STDERR_CAPTURE:-1} \
+2013-07-30 18:16:30.233 | OS_TEST_TIMEOUT=${OS_TEST_TIMEOUT:-60} \
+2013-07-30 18:16:30.233 | ${PYTHON:-python} -m subunit.run discover -t ./ . --list 
+2013-07-30 18:16:30.234 | running=OS_STDOUT_CAPTURE=${OS_STDOUT_CAPTURE:-1} \
+2013-07-30 18:16:30.234 | OS_STDERR_CAPTURE=${OS_STDERR_CAPTURE:-1} \
+2013-07-30 18:16:30.234 | OS_TEST_TIMEOUT=${OS_TEST_TIMEOUT:-60} \
+2013-07-30 18:16:30.234 | ${PYTHON:-python} -m subunit.run discover -t ./ .  --load-list /tmp/tmp.KqhppK1x2J/tmpimy11p
+2013-07-30 18:16:30.234 | running=OS_STDOUT_CAPTURE=${OS_STDOUT_CAPTURE:-1} \
+2013-07-30 18:16:30.234 | OS_STDERR_CAPTURE=${OS_STDERR_CAPTURE:-1} \
+2013-07-30 18:16:30.234 | OS_TEST_TIMEOUT=${OS_TEST_TIMEOUT:-60} \
+2013-07-30 18:16:30.234 | ${PYTHON:-python} -m subunit.run discover -t ./ .  --load-list /tmp/tmp.KqhppK1x2J/tmprbvcgx
+2013-07-30 18:16:30.234 | running=OS_STDOUT_CAPTURE=${OS_STDOUT_CAPTURE:-1} \
+2013-07-30 18:16:30.234 | OS_STDERR_CAPTURE=${OS_STDERR_CAPTURE:-1} \
+2013-07-30 18:16:30.234 | OS_TEST_TIMEOUT=${OS_TEST_TIMEOUT:-60} \
+2013-07-30 18:16:30.234 | ${PYTHON:-python} -m subunit.run discover -t ./ .  --load-list /tmp/tmp.KqhppK1x2J/tmp9n1c_4
+2013-07-30 18:16:30.234 | ======================================================================
+2013-07-30 18:16:30.234 | FAIL: unittest.loader.ModuleImportFailure.hacking.tests.test_gittest
+2013-07-30 18:16:30.234 | tags: worker-0
+2013-07-30 18:16:30.234 | ----------------------------------------------------------------------
+2013-07-30 18:16:30.235 | Traceback (most recent call last):
+2013-07-30 18:16:30.235 |   File "/usr/lib/python3.3/unittest/case.py", line 384, in _executeTestPart
+2013-07-30 18:16:30.235 |     function()
+2013-07-30 18:16:30.235 |   File "/usr/lib/python3.3/unittest/loader.py", line 32, in testFailure
+2013-07-30 18:16:30.235 |     raise exception
+2013-07-30 18:16:30.235 | ImportError: Failed to import test module: hacking.tests.test_gittest
+2013-07-30 18:16:30.235 | Traceback (most recent call last):
+2013-07-30 18:16:30.235 |   File "/usr/lib/python3.3/unittest/loader.py", line 261, in _find_tests
+2013-07-30 18:16:30.235 |     module = self._get_module_from_name(name)
+2013-07-30 18:16:30.235 |   File "/usr/lib/python3.3/unittest/loader.py", line 239, in _get_module_from_name
+2013-07-30 18:16:30.235 |     __import__(name)
+2013-07-30 18:16:30.235 |   File "/home/jenkins/workspace/fungi-node-tester/hacking/tests/test_gittest.py", line 18, in <module>
+2013-07-30 18:16:30.235 |     import hacking.core
+2013-07-30 18:16:30.235 |   File "/home/jenkins/workspace/fungi-node-tester/hacking/core.py", line 24, in <module>
+2013-07-30 18:16:30.235 |     import ConfigParser
+2013-07-30 18:16:30.235 | ImportError: No module named 'ConfigParser'
+2013-07-30 18:16:30.236 | ======================================================================
+2013-07-30 18:16:30.236 | FAIL: process-returncode
+2013-07-30 18:16:30.236 | tags: worker-0
+2013-07-30 18:16:30.236 | ----------------------------------------------------------------------
+2013-07-30 18:16:30.236 | Binary content:
+2013-07-30 18:16:30.236 |   traceback (test/plain; charset="utf8")
+2013-07-30 18:16:30.236 | ======================================================================
+2013-07-30 18:16:30.236 | FAIL: unittest.loader.LoadTestsFailure.hacking.tests.test_doctest
+2013-07-30 18:16:30.236 | tags: worker-1
+2013-07-30 18:16:30.236 | ----------------------------------------------------------------------
+2013-07-30 18:16:30.236 | Traceback (most recent call last):
+2013-07-30 18:16:30.236 |   File "/home/jenkins/workspace/fungi-node-tester/hacking/tests/test_doctest.py", line 70, in load_tests
+2013-07-30 18:16:30.236 |     flake8_style = engine.get_style_guide(parse_argv=False, ignore='F')
+2013-07-30 18:16:30.237 |   File "/home/jenkins/workspace/fungi-node-tester/.tox/py33/lib/python3.3/site-packages/flake8/engine.py", line 75, in get_style_guide
+2013-07-30 18:16:30.237 |     kwargs['parser'], options_hooks = get_parser()
+2013-07-30 18:16:30.237 |   File "/home/jenkins/workspace/fungi-node-tester/.tox/py33/lib/python3.3/site-packages/flake8/engine.py", line 38, in get_parser
+2013-07-30 18:16:30.237 |     (extensions, parser_hooks, options_hooks) = _register_extensions()
+2013-07-30 18:16:30.237 |   File "/home/jenkins/workspace/fungi-node-tester/.tox/py33/lib/python3.3/site-packages/flake8/engine.py", line 24, in _register_extensions
+2013-07-30 18:16:30.237 |     checker = entry.load()
+2013-07-30 18:16:30.237 |   File "/home/jenkins/workspace/fungi-node-tester/.tox/py33/lib/python3.3/site-packages/pkg_resources.py", line 2260, in load
+2013-07-30 18:16:30.237 |     entry = __import__(self.module_name, globals(),globals(), ['__name__'])
+2013-07-30 18:16:30.237 |   File "/home/jenkins/workspace/fungi-node-tester/hacking/core.py", line 24, in <module>
+2013-07-30 18:16:30.237 |     import ConfigParser
+2013-07-30 18:16:30.237 | ImportError: No module named 'ConfigParser'
+2013-07-30 18:16:30.237 | ======================================================================
+2013-07-30 18:16:30.237 | FAIL: hacking.tests.test_local.HackingTestCase.test_local_check
+2013-07-30 18:16:30.237 | tags: worker-2
+2013-07-30 18:16:30.238 | ----------------------------------------------------------------------
+2013-07-30 18:16:30.238 | Empty attachments:
+2013-07-30 18:16:30.238 |   stderr
+2013-07-30 18:16:30.238 |   stdout
+2013-07-30 18:16:30.238 | 
+2013-07-30 18:16:30.238 | Traceback (most recent call last):
+2013-07-30 18:16:30.238 |   File "/home/jenkins/workspace/fungi-node-tester/hacking/tests/test_local.py", line 30, in test_local_check
+2013-07-30 18:16:30.238 |     flake8_style = engine.get_style_guide(parse_argv=False, ignore='F')
+2013-07-30 18:16:30.238 |   File "/home/jenkins/workspace/fungi-node-tester/.tox/py33/lib/python3.3/site-packages/flake8/engine.py", line 75, in get_style_guide
+2013-07-30 18:16:30.238 |     kwargs['parser'], options_hooks = get_parser()
+2013-07-30 18:16:30.238 |   File "/home/jenkins/workspace/fungi-node-tester/.tox/py33/lib/python3.3/site-packages/flake8/engine.py", line 38, in get_parser
+2013-07-30 18:16:30.238 |     (extensions, parser_hooks, options_hooks) = _register_extensions()
+2013-07-30 18:16:30.238 |   File "/home/jenkins/workspace/fungi-node-tester/.tox/py33/lib/python3.3/site-packages/flake8/engine.py", line 24, in _register_extensions
+2013-07-30 18:16:30.238 |     checker = entry.load()
+2013-07-30 18:16:30.238 |   File "/home/jenkins/workspace/fungi-node-tester/.tox/py33/lib/python3.3/site-packages/pkg_resources.py", line 2260, in load
+2013-07-30 18:16:30.239 |     entry = __import__(self.module_name, globals(),globals(), ['__name__'])
+2013-07-30 18:16:30.239 |   File "/home/jenkins/workspace/fungi-node-tester/hacking/core.py", line 24, in <module>
+2013-07-30 18:16:30.239 |     import ConfigParser
+2013-07-30 18:16:30.239 | ImportError: No module named 'ConfigParser'
+2013-07-30 18:16:30.239 | ======================================================================
+2013-07-30 18:16:30.239 | FAIL: process-returncode
+2013-07-30 18:16:30.239 | tags: worker-1
+2013-07-30 18:16:30.239 | ----------------------------------------------------------------------
+2013-07-30 18:16:30.239 | Binary content:
+2013-07-30 18:16:30.239 |   traceback (test/plain; charset="utf8")
+2013-07-30 18:16:30.239 | ======================================================================
+2013-07-30 18:16:30.239 | FAIL: process-returncode
+2013-07-30 18:16:30.239 | tags: worker-2
+2013-07-30 18:16:30.239 | ----------------------------------------------------------------------
+2013-07-30 18:16:30.239 | Binary content:
+2013-07-30 18:16:30.240 |   traceback (test/plain; charset="utf8")
+2013-07-30 18:16:30.240 | Ran 9 tests in 0.080s
+2013-07-30 18:16:30.240 | FAILED (id=0, failures=6)
+2013-07-30 18:16:30.240 | error: testr failed (1)
+2013-07-30 18:16:30.302 | ERROR: InvocationError: '/home/jenkins/workspace/fungi-node-tester/.tox/py33/bin/python setup.py testr --slowest --testr-args='
+2013-07-30 18:16:30.306 | ___________________________________ summary ____________________________________
+2013-07-30 18:16:30.306 | ERROR:   py33: commands failed
+2013-07-30 18:16:30.321 | + result=1
+2013-07-30 18:16:30.322 | + echo 'Begin pip freeze output from test virtualenv:'
+2013-07-30 18:16:30.322 | Begin pip freeze output from test virtualenv:
+2013-07-30 18:16:30.322 | + echo ======================================================================
+2013-07-30 18:16:30.322 | ======================================================================
+2013-07-30 18:16:30.323 | + .tox/py33/bin/pip freeze
+2013-07-30 18:16:30.626 | Jinja2==2.7
+2013-07-30 18:16:30.626 | MarkupSafe==0.18
+2013-07-30 18:16:30.626 | Pygments==1.6
+2013-07-30 18:16:30.626 | Sphinx==1.1.3
+2013-07-30 18:16:30.626 | coverage==3.6
+2013-07-30 18:16:30.626 | d2to1==0.2.10
+2013-07-30 18:16:30.626 | discover==0.4.0
+2013-07-30 18:16:30.627 | docutils==0.11
+2013-07-30 18:16:30.627 | extras==0.0.3
+2013-07-30 18:16:30.627 | fixtures==0.3.12
+2013-07-30 18:16:30.627 | flake8==2.0
+2013-07-30 18:16:30.627 | hacking==jenkins.fungi.node.tester.42
+2013-07-30 18:16:30.627 | mccabe==0.2.1
+2013-07-30 18:16:30.627 | pbr==0.5.20
+2013-07-30 18:16:30.627 | pep8==1.4.5
+2013-07-30 18:16:30.627 | pyflakes==0.7.2
+2013-07-30 18:16:30.627 | python-mimeparse==0.1.4
+2013-07-30 18:16:30.627 | python-subunit==0.0.13
+2013-07-30 18:16:30.627 | setuptools-git==1.0
+2013-07-30 18:16:30.627 | testrepository==0.0.17
+2013-07-30 18:16:30.627 | testscenarios==0.4
+2013-07-30 18:16:30.627 | testtools==0.9.32
+2013-07-30 18:16:30.646 | + echo ======================================================================
+2013-07-30 18:16:30.646 | ======================================================================
+2013-07-30 18:16:30.647 | + '[' -d .testrepository ']'
+2013-07-30 18:16:30.647 | + '[' -f .testrepository/0.2 ']'
+2013-07-30 18:16:30.647 | + '[' -f .testrepository/0 ']'
+2013-07-30 18:16:30.647 | + cp .testrepository/0 ./subunit_log.txt
+2013-07-30 18:16:30.651 | + .tox/py33/bin/python /usr/local/jenkins/slave_scripts/subunit2html.py ./subunit_log.txt testr_results.html
+2013-07-30 18:16:30.694 |   File "/usr/local/jenkins/slave_scripts/subunit2html.py", line 484
+2013-07-30 18:16:30.694 |     print test
+2013-07-30 18:16:30.694 |              ^
+2013-07-30 18:16:30.694 | SyntaxError: invalid syntax
+2013-07-30 18:16:30.698 | + gzip -9 ./subunit_log.txt
+2013-07-30 18:16:30.703 | + gzip -9 ./testr_results.html
+2013-07-30 18:16:30.707 | gzip: ./testr_results.html: No such file or directory
+2013-07-30 18:16:30.708 | + set -e
+2013-07-30 18:16:30.710 | ++ .tox/py33/bin/python .tox/py33/bin/testr list-tests
+2013-07-30 18:16:30.711 | ++ sed -e 1d
+2013-07-30 18:16:30.711 | ++ wc -l
+2013-07-30 18:16:30.954 | /usr/bin/python: No module named subunit
+2013-07-30 18:16:30.962 | Non-zero exit code (1) from test listing. stdout=b'', stderr=None
+2013-07-30 18:16:30.996 | + foundcount=3
+2013-07-30 18:16:30.999 | ++ .tox/py33/bin/python .tox/py33/bin/testr last
+2013-07-30 18:16:31.000 | ++ sed -ne 's/Ran \([0-9]\+\).*tests in.*/\1/p'
+2013-07-30 18:16:31.214 | + rancount=6
+2013-07-30 18:16:31.215 | + '[' 6 -lt 3 ']'
+2013-07-30 18:16:31.215 | + set +e
+2013-07-30 18:16:31.215 | + sudo /usr/local/jenkins/slave_scripts/jenkins-sudo-grep.sh post
+2013-07-30 18:16:31.381 | + sudoresult=0
+2013-07-30 18:16:31.381 | + '[' 0 -ne 0 ']'
+2013-07-30 18:16:31.381 | + /usr/local/jenkins/slave_scripts/jenkins-oom-grep.sh post
+2013-07-30 18:16:31.401 | + oomresult=0
+2013-07-30 18:16:31.402 | + '[' 0 -ne 0 ']'
+2013-07-30 18:16:31.402 | ++ find . -name nose_results.html
+2013-07-30 18:16:31.424 | + htmlreport=
+2013-07-30 18:16:31.427 | + '[' -f '' ']'
+2013-07-30 18:16:31.427 | + echo
+2013-07-30 18:16:31.427 | 
+2013-07-30 18:16:31.427 | + echo 'WARNING: Unable to find  to confirm results!'
+2013-07-30 18:16:31.427 | WARNING: Unable to find  to confirm results!
+2013-07-30 18:16:31.427 | + echo
+2013-07-30 18:16:31.427 | 
+2013-07-30 18:16:31.427 | + exit 1
+2013-07-30 18:16:31.427 | + rm -rf /tmp/tmp.KqhppK1x2J
+2013-07-30 18:16:31.457 | Build step 'Execute shell' marked build as failure
+2013-07-30 18:16:31.495 | Finished: FAILURE
