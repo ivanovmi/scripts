@@ -99,12 +99,9 @@ else
 		main
 	fi
 fi
-else
-	echo "Number must greater than or equal to 2."
+else	
+	echo "Write number. Number must greater than or equal to 2."
 fi
-#else 
-#	echo "Not correct number. Please, try again."
-#fi
 else
 	echo "The file was not created. Restart the script with the correct path."
 fi
