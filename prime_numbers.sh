@@ -85,8 +85,7 @@ done
 
 touch $fn 2>/dev/null
 if [[ $? == 0 ]] ; then 
-if [[ "$nkey" =~ [0-9] ]] ; then
-if [[ "$nkey" -ge 2 ]] ; then
+if [[ "$nkey" =~ [0-9] || "$nkey" -ge 2 ]] ; then
 if [[ $hkey -eq 1 || -z "nkey" ]] ; then
  	usage
 elif [ -z "$nkey" ] ; then
@@ -103,9 +102,9 @@ fi
 else
 	echo "Number must greater than or equal to 2."
 fi
-else 
-	echo "Not correct number. Please, try again."
-fi
+#else 
+#	echo "Not correct number. Please, try again."
+#fi
 else
 	echo "The file was not created. Restart the script with the correct path."
 fi
