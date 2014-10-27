@@ -57,7 +57,7 @@ if [ $mkey -eq 1 ] ; then
 	sm="$(cat $fn)"
 	echo "Script started at $start, 
 	entered number: $nkey, result of prime
-number script: $sm" #| mail -s "Result" $m
+number script: $sm" | mail -s "Result" $m
 fi
 }
 
@@ -84,9 +84,11 @@ while [ 1 ] ; do
 done
 
 touch $fn 2>/dev/null
-if [[ $? == 0 ]] ; then
+if [[ $? == 0 ]] ; then 
+if [[ "$nkey" =~ [0-9] ]] ; then
+if [[ "$nkey" -ge 2 ]] ; then
 if [[ $hkey -eq 1 || -z "nkey" ]] ; then
-	usage
+ 	usage
 elif [ -z "$nkey" ] ; then
 	echo "Error! You don't pass required parameter." 1>&2
 	exit 1
@@ -97,6 +99,12 @@ else
 	else 
 		main
 	fi
+fi
+else
+	echo "Number must greater or equal 2."
+fi
+else 
+	echo "Not correct number. Please, try again."
 fi
 else
 	echo "The file was not created. Restart the script with the correct path."
