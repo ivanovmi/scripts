@@ -152,7 +152,44 @@ EOF
     start_services varnish
 }
 
+check_services() {
+    for service in "${!SERVICES_MAP[@]}"; do
+        NAME="$service"
+        PORT="${SERVICES_MAP[$service]}"
+        netstat_res=$(netstat -tulpan | grep -c "$PORT")
+        systemctl_status=$(systemctl status "$NAME" | grep -c "active")
+        if [[ "$netstat_res" -ge 1 ]] && [[ "$systemctl_status" -ge 1 ]] ; then
+            echo "$NAME running on $PORT"
+        else
+            exit 1
+        fi
+    done
+}
+
+show_services_table() {
+   set +x
+   echo "+--------------------+--------------------+"
+   echo "| Service name       | Port               |"
+   echo "+--------------------+--------------------+"
+   for service in "${!SERVICES_MAP[@]}"; do
+       NAME="$service"
+       PORT="${SERVICES_MAP[$service]}"
+       printf "| %-19s| %-19s|\n" "$NAME" "$PORT"
+       echo "+--------------------+--------------------+"
+   done
+}
+
 IP_ADDRESS=$(ifconfig ens3 | grep "inet " | awk -F'[: ]+' '{ print $4 }')
+
+declare -A SERVICES_MAP=(
+    ["postgresql"]="5432"
+    ["elasticsearch"]="9200"
+    ["prometheus"]="9090"
+    ["consul-dev"]="8500"
+    ["vault-dev"]="8200"
+    ["varnish"]="80"
+    ["apache2"]="8080"
+)
 
 install_packages apt-transport-https default-jre
 add_elasticsearch_repo
@@ -163,3 +200,5 @@ setup_consul
 setup_vault
 setup_apache
 setup_varnish
+check_services
+show_services_table
