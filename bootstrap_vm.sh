@@ -179,6 +179,18 @@ show_services_table() {
    done
 }
 
+expose_ports() {
+    # Expose elasticsearch
+    echo "network.host: 0.0.0.0" >> /etc/elasticsearch/elasticsearch.yml
+    # Expose postgres
+    sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/g" /etc/postgresql/9.5/main/postgresql.conf
+    echo "host all all all md5" >> /etc/postgresql/9.5/main/pg_hba.conf
+    # Create dev-user with password
+    sudo -u postgres bash -c "psql -c \"CREATE USER dev WITH PASSWORD 'password';\""
+
+    restart_services elasticsearch postgresql
+}
+
 IP_ADDRESS=$(ifconfig ens3 | grep "inet " | awk -F'[: ]+' '{ print $4 }')
 
 declare -A SERVICES_MAP=(
@@ -194,6 +206,7 @@ declare -A SERVICES_MAP=(
 install_packages apt-transport-https default-jre
 add_elasticsearch_repo
 install_packages postgresql elasticsearch apache2 varnish
+expose_ports
 stop_services apache2 varnish
 setup_prometheus
 setup_consul
