@@ -189,6 +189,9 @@ EOF
 
     enable_services vault-dev
     start_services vault-dev
+    # Vault takes some time to start_services
+    sleep 10
+
     # Unseal vault
     export VAULT_SKIP_VERIFY=true
 
