@@ -46,6 +46,41 @@ restart_services() {
     start_services "$@"
 }
 
+generate_certificates() {
+  export CERT_PATH=$(pwd)
+
+  common_name="$1"
+
+  subj="/C=US/ST=California/L=Sunnyvale/O=Mirantis Inc./OU=IT Department/CN=$common_name.devenv.mirantis.net"
+
+  # Create clean environment
+  dirname="$common_name"_certs
+  rm -rf "$dirname"
+  mkdir -p "$dirname" && pushd "$dirname"
+
+  # Create CA certificate
+  openssl genrsa 2048 > ca-"$common_name"-key.pem
+  openssl req -new -x509 -nodes -days 3600 \
+  -key ca-"$common_name"-key.pem -out ca-"$common_name".pem -subj "$subj"
+
+  # Create server certificate, remove passphrase, and sign it
+  # server-cert.pem = public key, server-key.pem = private key
+  openssl req -newkey rsa:2048 -days 3600 \
+          -nodes -keyout server-"$common_name"-key.pem -out server-"$common_name"-req.pem -subj "$subj"
+  openssl rsa -in server-"$common_name"-key.pem -out server-"$common_name"-key.pem
+  openssl x509 -req -in server-"$common_name"-req.pem -days 3600 \
+          -CA ca-"$common_name".pem -CAkey ca-"$common_name"-key.pem -set_serial 01 -out server-"$common_name"-cert.pem
+  # Create client certificate, remove passphrase, and sign it
+  # client-cert.pem = public key, client-key.pem = private key
+  openssl req -newkey rsa:2048 -days 3600 \
+          -nodes -keyout client-"$common_name"-key.pem -out client-"$common_name"-req.pem -subj "$subj"
+  openssl rsa -in client-"$common_name"-key.pem -out client-"$common_name"-key.pem
+  openssl x509 -req -in client-"$common_name"-req.pem -days 3600 \
+          -CA ca-"$common_name".pem -CAkey ca-"$common_name"-key.pem -set_serial 01 -out client-"$common_name"-cert.pem
+
+  popd
+}
+
 add_elasticsearch_repo() {
     wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add -
     echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" > /etc/apt/sources.list.d/elastic-5.x.list
@@ -106,7 +141,7 @@ setup_prometheus() {
 
 install_packages() {
     apt-get update
-    apt-get install -y "$@"
+    DEBIAN_FRONTEND="noninteractive" apt-get install -y "$@"
 }
 
 download_zip_and_extract() {
@@ -127,11 +162,52 @@ setup_consul() {
 }
 
 setup_vault() {
-    download_zip_and_extract "https://releases.hashicorp.com/vault/0.9.3/vault_0.9.3_linux_amd64.zip?_ga=2.54139176.107181496.1517420140-437309316.1517318914" vault
-    create_systemd_unit vault-dev root "/usr/local/bin/vault server -dev -dev-listen-address=0.0.0.0:8200"
+    download_zip_and_extract "https://releases.hashicorp.com/vault/0.9.3/vault_0.9.3_linux_amd64.zip" vault
+    create_systemd_unit vault-dev root "/usr/local/bin/vault server -config /etc/vault/config.hcl"
+
+    mkdir -p vault-config && pushd vault-config
+    cat > policies.hcl <<EOF
+path "*" {
+capabilities = ["create", "read", "update", "delete", "list"]
+}
+EOF
+    popd
+    mkdir -p /etc/vault
+    cat > /etc/vault/config.hcl <<EOF
+storage "consul" {
+  address = "127.0.0.1:8500"
+  path    = "vault"
+}
+
+listener "tcp" {
+  address     = "0.0.0.0:8200"
+  tls_disable = 0
+  tls_cert_file = "$CERT_PATH/vault_certs/server-vault-cert.pem"
+  tls_key_file = "$CERT_PATH/vault_certs/server-vault-key.pem"
+}
+EOF
 
     enable_services vault-dev
     start_services vault-dev
+    # Unseal vault
+    export VAULT_SKIP_VERIFY=true
+
+    output=$(vault operator init | grep -v "^$")
+    root_token=$(echo "$output" | grep "Root Token" | awk '{ print $NF }')
+    # Black magic that trim .[0m
+    root_token=${root_token:0:${#root_token} - 4}
+    keys=$(echo "$output" | grep "Unseal Key" | awk '{ print $NF }')
+    export VAULT_TOKEN="$root_token"
+    for key in $keys; do
+      # Black magic that trim .[0m
+      key=${key:0:${#key} - 4}
+      vault operator unseal "$key"
+    done
+    vault policy write allow-all $CERT_PATH/vault-config/policies.hcl
+    vault auth enable cert
+    vault write auth/cert/certs/saas display_name=saas policies=allow-all,admin certificate=@"$CERT_PATH"/vault_certs/server-vault-cert.pem ttl=0
+    # unset VAULT_TOKEN
+    unset VAULT_SKIP_VERIFY
 }
 
 setup_apache() {
@@ -177,6 +253,8 @@ show_services_table() {
        printf "| %-19s| %-19s|\n" "$NAME" "$PORT"
        echo "+--------------------+--------------------+"
    done
+   printf "| %-19s| %-19s|\n" "VAULT ROOT TOKEN" "$VAULT_TOKEN"
+   echo "+--------------------+--------------------+"
 }
 
 expose_ports() {
@@ -186,9 +264,31 @@ expose_ports() {
     sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/g" /etc/postgresql/9.5/main/postgresql.conf
     echo "host all all all md5" >> /etc/postgresql/9.5/main/pg_hba.conf
     # Create dev-user with password
-    sudo -u postgres bash -c "psql -c \"CREATE USER dev WITH PASSWORD 'password';\""
+    sudo -u postgres bash -c "psql -c \"CREATE USER dev WITH PASSWORD 'password';\"" || echo "User dev already exists"
 
-    restart_services elasticsearch postgresql
+    # Expose mysql
+    sed -i "s/127.0.0.1/0.0.0.0/g" /etc/mysql/mysql.conf.d/mysqld.cnf
+
+    restart_services elasticsearch postgresql mysql
+}
+
+add_debconf_selection() {
+  debconf-set-selections <<< "$1"
+}
+
+setup_mysql() {
+  chown -R mysql:mysql $CERT_PATH/mysql_certs
+
+  for str in  ssl-ca=$CERT_PATH/mysql_certs/ca-mysql.pem ssl-cert=$CERT_PATH/mysql_certs/server-mysql-cert.pem ssl-key=$CERT_PATH/mysql_certs/server-mysql-key.pem ; do
+    if [[ $(grep ^$(echo $str | awk -F '=' '{print $1}') /etc/mysql/mysql.conf.d/mysqld.cnf | wc -l) -eq 0 ]] ; then
+      echo $str >> /etc/mysql/mysql.conf.d/mysqld.cnf
+    fi
+  done
+
+  mysql -prootpw -e "CREATE USER 'dev'@'%' REQUIRE ISSUER '/C=US/ST=California/L=Sunnyvale/O=Mirantis Inc./OU=IT Department/CN=mysql.devenv.mirantis.net'"
+  mysql -prootpw -e "GRANT ALL PRIVILEGES ON *.* TO 'dev'@'%'"
+  mysql -prootpw -e "FLUSH PRIVILEGES"
+  restart_services mysql
 }
 
 IP_ADDRESS=$(ifconfig ens3 | grep "inet " | awk -F'[: ]+' '{ print $4 }')
@@ -201,17 +301,27 @@ declare -A SERVICES_MAP=(
     ["vault-dev"]="8200"
     ["varnish"]="80"
     ["apache2"]="8080"
+    ["mysql"]="3306"
 )
 
-install_packages apt-transport-https default-jre
+install_packages apt-transport-https default-jre unzip
 add_elasticsearch_repo
-install_packages postgresql elasticsearch apache2 varnish
-expose_ports
+
+for service in vault mysql ; do
+  generate_certificates "$service"
+done
+
+add_debconf_selection "mysql-server mysql-server/root_password password rootpw"
+add_debconf_selection "mysql-server mysql-server/root_password_again password rootpw"
+
+install_packages postgresql elasticsearch apache2 varnish mysql-server mysql-client
 stop_services apache2 varnish
+setup_mysql
 setup_prometheus
 setup_consul
 setup_vault
 setup_apache
 setup_varnish
+expose_ports
 check_services
 show_services_table
