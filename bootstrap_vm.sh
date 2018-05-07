@@ -326,5 +326,6 @@ setup_vault
 setup_apache
 setup_varnish
 expose_ports
+sleep 10
 check_services
 show_services_table
